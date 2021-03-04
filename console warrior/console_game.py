@@ -70,7 +70,7 @@ class Monster:
     self.armor = armor
     self.damage = damage
     self.level = level
-giant_rat = Monster("giant rat", 3 , 0, 1, 1)
+#giant_rat = Monster("giant rat", 3 , 0, 1, 1)
 
 
 # asks for player name, tells player his current stats + coins 
