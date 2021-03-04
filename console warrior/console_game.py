@@ -17,19 +17,19 @@ class Weapon:
         self.damage = damage
 
     #Prints the value    
-    def __str__(self):
-        return f"TEST"
+    #def __str__(self):
+    #    return f"TEST"
 
 all_weapons = [
-  Weapon('Wooden Knuckle Duster', price = 5, damage = 3),
-  Weapon('Wooden Sword', price = 10, damage = 5),
-  Weapon('Iron Dagger', price = 35, damage = 7),
-  Weapon('Iron Sword', price = 75, damage = 9),
-  Weapon('Iron Machete', price = 85, damage = 11),
-  Weapon('Steel Longsword', price = 125, damage = 16),
-  Weapon('Steel Mace', price = 250, damage = 25),
-  Weapon('Ray Gun', price = 2147483647, damage = 15000),
-  Weapon('Lange Dildo', price = 2147483647, damage = 15000)
+  Weapon(name = 'Wooden Knuckle Duster', price = 5, damage = 3),
+  Weapon(name = 'Wooden Sword', price = 10, damage = 5),
+  Weapon(name = 'Iron Dagger', price = 35, damage = 7),
+  Weapon(name = 'Iron Sword', price = 75, damage = 9),
+  Weapon(name = 'Iron Machete', price = 85, damage = 11),
+  Weapon(name = 'Steel Longsword', price = 125, damage = 16),
+  Weapon(name = 'Steel Mace', price = 250, damage = 25),
+  Weapon(name = 'Ray Gun', price = 2147483647, damage = 15000),
+  Weapon(name = 'Lange Dildo', price = 2147483647, damage = 15000)
 ]
 
 
@@ -40,17 +40,17 @@ class Armour:
         self.defence = defence
 
 all_armour = [
-  Armour('Leather Sandals', price = 5, defence = 3),
-  Armour('Leather Shield', price = 10, defence = 5),
-  Armour('Leather Body ', price = 35, defence = 7),
-  Armour('Tinfoil Hat', price = 75, defence = 9),
-  Armour('Amulet of the Gaylords', price = 125, defence = 10),
-  Armour('Steel Skirt', price = 125, defence = 13),
-  Armour('Grandmaster Shield', price = 500, defence = 25),
-  Armour('Grandmaster Helmet', price = 750, defence = 40),
-  Armour('Grandmaster Tassets', price = 1000, defence = 55),
-  Armour('Grandmaster Hauberk', price = 1500, defence = 80),
-  Armour('Gucci Flip-flops', price = 2147483647, defence = 15000)
+  Armour(name ='Leather Sandals', price = 5, defence = 3),
+  Armour(name ='Leather Shield', price = 10, defence = 5),
+  Armour(name ='Leather Body ', price = 35, defence = 7),
+  Armour(name ='Tinfoil Hat', price = 75, defence = 9),
+  Armour(name ='Amulet of the Gaylords', price = 125, defence = 10),
+  Armour(name ='Steel Skirt', price = 125, defence = 13),
+  Armour(name ='Grandmaster Shield', price = 500, defence = 25),
+  Armour(name ='Grandmaster Helmet', price = 750, defence = 40),
+  Armour(name ='Grandmaster Tassets', price = 1000, defence = 55),
+  Armour(name ='Grandmaster Hauberk', price = 1500, defence = 80),
+  Armour(name ='Gucci Flip-flops', price = 2147483647, defence = 15000)
 ]
 
 # a nice way to display your current stats
@@ -62,15 +62,18 @@ def stats():
     print(f"**   Gold: {new_character.gold}   **")
     print(f"******************")
 
-# class of monster?
 class Monster:
-  def __init__(self, health, armor, damage, level):
+  def __init__(self, name,  health, armor, damage, level):
     self.name = name
     self.health = health
     self.armor = armor
     self.damage = damage
     self.level = level
-#giant_rat = Monster("giant rat", 3 , 0, 1, 1)
+all_monsters = [
+  Monster(name ='Rat', health = 3, armor = 0, damage = 1, level = 1),
+  Monster(name ='Zombie', health = 10, armor = 0, damage = 3, level = 4),
+  Monster(name ='Armoured Zombie', health = 25, armor = 5, damage = 5, level = 15)
+]
 
 
 # asks for player name, tells player his current stats + coins 
@@ -97,7 +100,7 @@ def weapon_store():
     print("\nWelcome to the weapon store of Console Warrior\n")
     while True:
         try:
-            the_input = int(input("Type \'1\' to see weapons or \'2\' to see armour : ")) #nog optie maken om terug te gaan, maar niet noodzakelijk nog
+            the_input = int(input(f"-Type \'1\' to see the weaponshop  \n-Type \'2\' to see the armourshop \n-Type \'3\' to start playing. \n\nDon\'t start playing with no gear, you\'ll die. : "))
         except ValueError:
             print("Please enter a valid number boss you dipshit")
             continue
@@ -119,16 +122,16 @@ def weapon_store():
 
                 if input_for_weapon == 69:
                     print("CONTINUE GAME")
+                    break
                 elif input_for_weapon in range(0, len(all_weapons)-1) :
-                    #selected_weapon = all_weapons[input_for_weapon]
-                    #print(f"The weapon you selected is {selected_weapon} ")
-                    print(range(0,len(all_weapons)-1))
-                    print(f"You chose weapon {input_for_weapon}")
+                    selected_weapon = all_weapons[input_for_weapon].name
+                    print(f"The weapon you selected is {selected_weapon} ")
                     answer = input("if you want to buy this item type \'yes\' : ")
                     if answer == 'yes':                                                  #en als je genoeg geld hebt
                         print(f"You bought weapon {input_for_weapon}")
+                        break
                     else:
-                        continue
+                        print("Type \'yes\' to buy it.")
 
 
 
@@ -141,13 +144,32 @@ def weapon_store():
             for i, armour in enumerate(all_armour):
                 print(f'{i}) {armour.name} - {armour.price} coins - {armour.defence} defence')
             break
+
+        elif the_input == 3:
+            print("START OF THE ADVENTURE")
+            print("START OF THE ADVENTURE")
+            print("START OF THE ADVENTURE")
+            print("START OF THE ADVENTURE")
+            print("START OF THE ADVENTURE")
+            stats()
+            print("SHOW OPTIONS")
+            print("SHOW OPTIONS")
+            print("SHOW OPTIONS")
+            print("SHOW OPTIONS")
+            break
+
+
         else:
             print("1 or 2 man don\'t be retarded")
 
 
-selected_weapon = all_weapons[1]
-print(selected_weapon)
+
+#selected_weapon = all_weapons[1]
+#print(selected_weapon)
 #print(all_weapons[1])
+
+#for x in range(len(all_weapons)):
+#    print(all_weapons[x].name) 
 
 introduction()
 weapon_store()
