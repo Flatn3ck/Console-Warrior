@@ -100,7 +100,7 @@ def weapon_store():
     print("\nWelcome to the weapon store of Console Warrior\n")
     while True:
         try:
-            the_input = int(input(f"-Type \'1\' to see the weaponshop  \n-Type \'2\' to see the armourshop \n-Type \'3\' to start playing. \n\nDon\'t start playing with no gear, you\'ll die. : "))
+            the_input = int(input(f"- Type \'1\' to see the weaponshop  \n- Type \'2\' to see the armourshop \n- Type \'3\' to start playing. \n\nDon\'t start playing with no gear, you\'ll die. : "))
         except ValueError:
             print("Please enter a valid number boss you dipshit")
             continue
@@ -115,23 +115,28 @@ def weapon_store():
 
             while True:
                 try:    
-                    input_for_weapon = int(input(f"\nYou have {new_character.gold} coins right now. Enter the number of the item you want to buy or type \'69\' to continue the game : "))
+                    input_for_weapon = int(input(f"\nYou have {new_character.gold} coins right now. Enter the number of the item you want to buy or type \'69\' to return to the previous screen : "))
                 except ValueError:
-                    print("Please enter the number of item you want to buy, or enter \'69\'")
+                    print("Please enter the number of item you want to buy, or enter \'69\' to return to the previous screen")
                     continue
 
                 if input_for_weapon == 69:
-                    print("CONTINUE GAME")
+                    print("\n")
                     break
                 elif input_for_weapon in range(0, len(all_weapons)-1) :
                     selected_weapon = all_weapons[input_for_weapon].name
-                    print(f"The weapon you selected is {selected_weapon} ")
+                    selected_weapon_price = all_weapons[input_for_weapon].price
+                    print(f"\nThe weapon you selected is {selected_weapon} and it costs {selected_weapon_price} coins \n")
                     answer = input("if you want to buy this item type \'yes\' : ")
-                    if answer == 'yes':                                                  #en als je genoeg geld hebt
-                        print(f"You bought weapon {input_for_weapon}")
+                    if answer == 'yes' and new_character.gold >= selected_weapon_price :  
+                        new_character.gold = new_character.gold - selected_weapon_price
+                        new_character.weapon = selected_weapon                                              
+                        print(f"\nYou bought a {selected_weapon} and you have {new_character.gold} coins left.\n")
                         break
+                    elif answer == 'yes' and new_character.gold < selected_weapon_price:
+                        print(f"\nYou don\'t have enough money to purchase {selected_weapon}")
                     else:
-                        print("Type \'yes\' to buy it.")
+                        print("\nType \'yes\' to buy it.")
 
 
 
@@ -146,21 +151,14 @@ def weapon_store():
             break
 
         elif the_input == 3:
-            print("START OF THE ADVENTURE")
-            print("START OF THE ADVENTURE")
-            print("START OF THE ADVENTURE")
-            print("START OF THE ADVENTURE")
-            print("START OF THE ADVENTURE")
+            print("\nSTART OF THE ADVENTURE\n")
             stats()
-            print("SHOW OPTIONS")
-            print("SHOW OPTIONS")
-            print("SHOW OPTIONS")
-            print("SHOW OPTIONS")
+            print("\nSHOW OPTIONS\n")
             break
 
 
         else:
-            print("1 or 2 man don\'t be retarded")
+            print("1, 2 or 3 man don\'t be retarded")
 
 
 
