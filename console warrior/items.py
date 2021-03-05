@@ -31,8 +31,8 @@ all_armour = [
 
 
 all_monsters = [
-  Monster(name ='Rat', health = 3, armor = 0, damage = 1, level = 1),
-  Monster(name ='Zombie', health = 10, armor = 0, damage = 3, level = 4),
+  Monster(name ='Rat', health = 7, armor = 0, damage = 2, level = 1),
+  Monster(name ='Zombie', health = 10, armor = 0, damage = 4, level = 4),
   Monster(name ='Vampire', health = 15, armor = 3, damage = 5, level = 9),
   Monster(name ='Werewolf', health = 25, armor = 5, damage = 8, level = 15),
   Monster(name ='Armoured Zombie', health = 28, armor = 10, damage = 15, level = 18),

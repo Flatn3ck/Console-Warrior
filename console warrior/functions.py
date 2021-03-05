@@ -1,6 +1,8 @@
 from classes import *
 from items import *
 import time
+import random
+
 
 def print_and_sleep(text, seconds):
   print(text)
@@ -80,7 +82,7 @@ def weapon_store():
                     selected_weapon_damage = all_weapons[input_for_weapon].damage
                     print(f"\nThe weapon you selected is {selected_weapon} and it costs {selected_weapon_price} coins \n")
                     time.sleep(1)
-                    answer = input("if you want to buy this item type \'yes\' : ")
+                    answer = input("If you want to buy this item type \'yes\' : ")
 
                     if answer == 'yes' and new_character.gold >= selected_weapon_price :  
                         new_character.gold = new_character.gold - selected_weapon_price
@@ -94,6 +96,7 @@ def weapon_store():
                         print(f"\nYou don\'t have enough money to purchase {selected_weapon}")
                         weapon_store()
                     else:
+                        weapon_store()
                         print("\nType \'yes\' to buy it.")
 
 ######################################################################################################################################################################
@@ -157,6 +160,7 @@ def weapon_store():
 def continue_adventure():
     print("\nYou got 4 options : \n")
     options_input = int(input(f"- Type \'1\' to train your combat and level up  \n- Type \'2\' to see your stats and gear \n- Type \'3\' to check out the shops. \n- Type \'4\' to fight the boss of this floor (available at level 5) : "))
+        
     if options_input == 1:
         print_and_sleep("\n~~~~~List of monsters to fight~~~~~ \n", 0.5)
         for i, monster in enumerate(all_monsters):
@@ -174,13 +178,13 @@ def continue_adventure():
                 if input_for_fight == 69:
                     print("\n")
                     continue_adventure()
-                elif input_for_fight in range(0, len(all_monsters)) :
+                elif input_for_fight in range(0, len(all_monsters)-1) :
                     selected_monster = all_monsters[input_for_fight].name
                     print(f"\nThe monster you selected is {selected_monster}, are you sure you can handle that? ")
                     answer = input("\nIf you can handle it type \'yes\' or typ \'back\' to go back : ")
                     if answer == 'yes':
                         print_and_sleep(f"\nSo you want to try to kill {selected_monster}... With a {new_character.weapon}?? gooood luck..\n", 0.5)
-                        fight(selected_monster)
+                        fight(selected_monster,input_for_fight)
                         continue_adventure()
                     elif answer == 'back':
                         continue_adventure()
@@ -201,13 +205,60 @@ def continue_adventure():
             continue_adventure()
 
 
-def fight(selected_monster):
+def fight(selected_monster, input_for_fight):
     print_and_sleep(f"- Type \'1\' to attack the {selected_monster} \n- Type \'2\' to eat food or drink a potion (not available yet) \n- Type \'3\' to run away!. \n",0.5)
     fight_input = int(input("\nWhat do you want to do? : "))
     if fight_input == 1:
-        print_and_sleep(f"\nYou hit the {selected_monster} right in the kisser! his health is now {selected_monster.health} but he will attack you now!",1)
-        print_and_sleep(f"\nThe {selected_monster} hits back! your health is now {new_character.health} but it's your turn to fight now!",1)
-        blabla = int(input("yo"))
+
+        monster_health = all_monsters[input_for_fight].health
+        monster_damage = all_monsters[input_for_fight].damage
+        new_health_monster = monster_health
+        new_player_health = new_character.health
+
+        while new_health_monster > 0 and new_player_health > 0:
+
+            print_and_sleep(f"\nThe {selected_monster}'s health is {new_health_monster}", 2)
+            print_and_sleep(f"\nYour health is {new_player_health} \n", 2)
+            damage_done_with_hit = random.randint(0,new_character.damage)
+            
+
+            if new_player_health > 0 and new_health_monster > 0:
+                if damage_done_with_hit < new_health_monster:
+                    new_health_monster = new_health_monster - damage_done_with_hit
+                    print_and_sleep(f"You hit the {selected_monster} and take {damage_done_with_hit} of his health with your attack! his health is now {new_health_monster} but he will attack you now!",3)
+                else:
+                    print_and_sleep(f"You hit the {selected_monster} with a {damage_done_with_hit} and take his last health with your attack! his health is now 0 and he dies in front of your eyes",3)
+                    new_health_monster = 0
+
+            damage_done_by_monster = random.randint(0,monster_damage)
+            
+
+
+
+
+            if new_health_monster > 0 and new_player_health > 0:
+                if damage_done_by_monster < new_player_health:
+                    new_player_health = new_player_health - damage_done_by_monster
+                    print_and_sleep(f"\nThe {selected_monster} hits back! He hits a {damage_done_by_monster} and your health is now {new_player_health} but it's your turn to fight now!",3)
+                else:
+                    print_and_sleep(f"The {selected_monster} hits a {damage_done_by_monster} and it kills you.. I told you you wouldn\'t last.....",3)        
+                    new_player_health = 0
+
+
+
+            if new_player_health <= 0:
+                print_and_sleep("YOU DIED!!!!!!!",1)
+                print_and_sleep("YOU DIED!!!!!!!",1)
+                print_and_sleep("YOU DIED!!!!!!!",1)
+                print_and_sleep("YOU DIED!!!!!!!",1)
+                #loss()
+                continue_adventure()
+            elif new_health_monster <= 0:
+                print_and_sleep(f"\nYou killed the {selected_monster}!!! ",1)
+                win(monster_health, selected_monster)
+                continue_adventure()
+
+
     elif fight_input == 2:
         print(f"\nnot available yet, sorry!")
         continue_adventure()
@@ -219,12 +270,14 @@ def fight(selected_monster):
 
 
 
-
-
-
-
-
-
+#Granting EXP / GOLD For a kill!
+def win(monster_health, selected_monster):  
+    gained_exp = monster_health * 4
+    new_character.experience = new_character.experience + gained_exp
+    new_character.gold = new_character.gold
+    print_and_sleep(f"\nCongratulations on killing the {selected_monster}! You gained {gained_exp} and you got 10 coins.  \n",2)
+    print_and_sleep(f"Your total experience is now {new_character.experience} exp and your total balance of coins is now {new_character.gold}",2)
+    return new_character.experience, new_character.gold
 
 
 

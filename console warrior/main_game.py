@@ -5,8 +5,6 @@ import time
 
 
 
-
-
 play_game()
 
 end_game = input("\n\nBye!!!!!!! :'(")
