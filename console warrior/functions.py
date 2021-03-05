@@ -270,14 +270,34 @@ def fight(selected_monster, input_for_fight):
 
 
 
+#Check experience and checks if you level up
+def check_level(check_exp):
+    if new_character.experience < 83:
+        new_character.level = 1
+    elif new_character.experience > 82 and new_character.experience < 140:
+        new_character.level = 2
+    elif new_character.experience > 139 and new_character.experience < 200:
+        new_character.level = 3
+    elif new_character.experience > 199 and new_character < 300:
+        new_character.level = 4
+    else:
+        new_character.level = 5
+    return new_character.level
+
+
 #Granting EXP / GOLD For a kill!
 def win(monster_health, selected_monster):  
     gained_exp = monster_health * 4
+    gained_gold = monster_health * 2
     new_character.experience = new_character.experience + gained_exp
-    new_character.gold = new_character.gold
-    print_and_sleep(f"\nCongratulations on killing the {selected_monster}! You gained {gained_exp} and you got 10 coins.  \n",2)
-    print_and_sleep(f"Your total experience is now {new_character.experience} exp and your total balance of coins is now {new_character.gold}",2)
+    new_character.gold = new_character.gold + gained_gold
+    print_and_sleep(f"\nCongratulations on killing the {selected_monster}! You gained {gained_exp} exp and you gained {gained_gold} coins.  \n",2)
+    print_and_sleep(f"Your total balance of coins is now {new_character.gold}\n",2)
+    check_exp = new_character.experience
+    check_level(check_exp)
+    print_and_sleep(f"Your total experience is now {new_character.experience} and your level is {new_character.level}!",1)
     return new_character.experience, new_character.gold
+
 
 
 
