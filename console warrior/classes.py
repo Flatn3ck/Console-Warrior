@@ -1,13 +1,14 @@
 class Character:
-  def __init__(self, health, armor, damage, level, gold, weapon, gear):
+  def __init__(self, health, armor, damage, level, gold, experience, weapon, gear):
     self.health = health
     self.armor = armor
     self.damage = damage
     self.level = level
     self.gold = gold
+    self.experience = experience
     self.weapon = "Fists"
     self.gear = "Underwear"
-new_character = Character(10, 0, 1, 1, 25, "Fists", "Underwear")                                     
+new_character = Character(10, 0, 1, 1, 25, 0, "Fists", "Underwear")                                     
 
 class Weapon:
     def __init__(self, name, price, damage):
