@@ -1,4 +1,4 @@
-from classes import Character, Weapon, Armour, Monster
+from classes import *
 
 
 all_weapons = [
