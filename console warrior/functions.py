@@ -1,7 +1,9 @@
 from classes import *
 from items import *
+from check_level import *
 import time
 import random
+
 
 
 def print_and_sleep(text, seconds):
@@ -41,7 +43,7 @@ def stats():
     print_and_sleep(f"Your current armour is: {new_character.gear}",0.5)
     print_and_sleep(f"Your current damage is: {new_character.damage}",0.5)
     print_and_sleep(f"Your current experience points are: {new_character.experience}",0.5)
-    print_and_sleep(f"You\'ll need {83-new_character.experience} exp to reach level {new_character.level+1}",0.5)
+    ##### HOW MANY EXP LEFT FOR NEXT LEVEL?
 
 
 
@@ -270,19 +272,6 @@ def fight(selected_monster, input_for_fight):
 
 
 
-#Check experience and checks if you level up
-def check_level(check_exp):
-    if new_character.experience < 83:
-        new_character.level = 1
-    elif new_character.experience > 82 and new_character.experience < 140:
-        new_character.level = 2
-    elif new_character.experience > 139 and new_character.experience < 200:
-        new_character.level = 3
-    elif new_character.experience > 199 and new_character < 300:
-        new_character.level = 4
-    else:
-        new_character.level = 5
-    return new_character.level
 
 
 #Granting EXP / GOLD For a kill!
@@ -294,8 +283,14 @@ def win(monster_health, selected_monster):
     print_and_sleep(f"\nCongratulations on killing the {selected_monster}! You gained {gained_exp} exp and you gained {gained_gold} coins.  \n",2)
     print_and_sleep(f"Your total balance of coins is now {new_character.gold}\n",2)
     check_exp = new_character.experience
+    level_of_player = new_character.level
     check_level(check_exp)
-    print_and_sleep(f"Your total experience is now {new_character.experience} and your level is {new_character.level}!",1)
+    if new_character.level > level_of_player :
+        print_and_sleep(f"~~~~~ You are now level {new_character.level}! Congratulations ~~~~~ \n",1)
+    print_and_sleep(f"Your total experience is now {new_character.experience} and your level is {new_character.level}!\n",1)
+    if new_character.level >= 5:
+        print_and_sleep("You can now try to fight this floor\'s boss, but be prepared.....",1)
+
     return new_character.experience, new_character.gold
 
 
