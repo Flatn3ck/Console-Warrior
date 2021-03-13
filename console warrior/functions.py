@@ -77,7 +77,7 @@ def weapon_store():
 
                 if input_for_weapon == 69:
                     print("\n")
-                    break
+                    weapon_store()
                 elif input_for_weapon in range(0, len(all_weapons)-1) :
                     selected_weapon = all_weapons[input_for_weapon].name
                     selected_weapon_price = all_weapons[input_for_weapon].price
@@ -110,7 +110,7 @@ def weapon_store():
             # This will loop through the armours and displays them
             for i, armour in enumerate(all_armour):
                 time.sleep(0.25)
-                print(f'{i}) {armour.name} - {armour.price} coins - {armour.defence} defence')
+                print(f'{i}) {armour.name} - {armour.price} coins - {armour.defence} defence - {armour.hpboost} extra health ')
             
             while True:
                 try:    
@@ -121,10 +121,11 @@ def weapon_store():
 
                 if input_for_armour == 69:
                     print("\n")
-                    break
+                    weapon_store()
                 elif input_for_armour in range(0, len(all_armour)-1) :
                     selected_armour = all_armour[input_for_armour].name
                     selected_armour_defence = all_armour[input_for_armour].defence
+                    selected_armour_hpboost = all_armour[input_for_armour].hpboost
                     selected_armour_price = all_armour[input_for_armour].price
                     print(f"\nThe armour you selected is {selected_armour} and it costs {selected_armour_price} coins \n")
                     answer = input("if you want to buy this item type \'yes\' : ")
@@ -132,10 +133,11 @@ def weapon_store():
                     if answer == 'yes' and new_character.gold >= selected_armour_price :  
                         new_character.gold = new_character.gold - selected_armour_price
                         new_character.gear = selected_armour    
-                        new_character.armor += all_armour[input_for_armour].defence                                         
+                        new_character.armor += all_armour[input_for_armour].defence  
+                        new_character.health += selected_armour_hpboost                                       
                         print(f"\nYou bought a {selected_armour} and you have {new_character.gold} coins left.\n")
                         weapon_store()
-                        return new_character.gear, new_character.gold, new_character.armor
+                        return new_character.gear, new_character.gold, new_character.armor, new_character.health
                     elif answer == 'yes' and new_character.gold < selected_armour_price:
                         print(f"\nYou don\'t have enough money to purchase {selected_armour}")
                         weapon_store()
@@ -191,7 +193,7 @@ def continue_adventure():
                     elif answer == 'back':
                         continue_adventure()
                     else:
-                        print("Returning to previous screen...")
+                        print("\nReturning to previous screen...")
     elif options_input == 2:
         stats()
         continue_adventure()
@@ -203,8 +205,8 @@ def continue_adventure():
             print("\nYou have to get to level 5 before you even try this..")
             continue_adventure()
         else:
-            print("Let\'s kill the boss")
-            continue_adventure()
+            print("\nLet\'s kill the boss")
+            boss_fight()
 
 
 def fight(selected_monster, input_for_fight):
@@ -222,6 +224,8 @@ def fight(selected_monster, input_for_fight):
             print_and_sleep(f"\nThe {selected_monster}'s health is {new_health_monster}", 2)
             print_and_sleep(f"\nYour health is {new_player_health} \n", 2)
             damage_done_with_hit = random.randint(0,new_character.damage)
+            if damage_done_with_hit == 0:
+                damage_done_with_hit = random.randint(0,new_character.damage//2)
             
 
             if new_player_health > 0 and new_health_monster > 0:
@@ -233,7 +237,8 @@ def fight(selected_monster, input_for_fight):
                     new_health_monster = 0
 
             damage_done_by_monster = random.randint(0,monster_damage)
-            
+            if damage_done_by_monster == 0:
+                damage_done_by_monster = random.randint(0,monster_damage//2)
 
 
 
@@ -243,16 +248,13 @@ def fight(selected_monster, input_for_fight):
                     new_player_health = new_player_health - damage_done_by_monster
                     print_and_sleep(f"\nThe {selected_monster} hits back! He hits a {damage_done_by_monster} and your health is now {new_player_health} but it's your turn to fight now!",3)
                 else:
-                    print_and_sleep(f"The {selected_monster} hits a {damage_done_by_monster} and it kills you.. I told you you wouldn\'t last.....",3)        
+                    print_and_sleep(f"\nThe {selected_monster} hits a {damage_done_by_monster} and it kills you.. I told you you wouldn\'t last.....",3)        
                     new_player_health = 0
 
 
 
             if new_player_health <= 0:
-                print_and_sleep("YOU DIED!!!!!!!",1)
-                print_and_sleep("YOU DIED!!!!!!!",1)
-                print_and_sleep("YOU DIED!!!!!!!",1)
-                print_and_sleep("YOU DIED!!!!!!!",1)
+                print_and_sleep("\nYOU DIED!!!!!!!",1)
                 #loss()
                 continue_adventure()
             elif new_health_monster <= 0:
@@ -268,7 +270,7 @@ def fight(selected_monster, input_for_fight):
         print("\nYou ran away!! coward.....")
         continue_adventure()
     else:
-        fight()
+        (selected_monster, input_for_fight, new_player_health)
 
 
 
@@ -294,6 +296,10 @@ def win(monster_health, selected_monster):
     return new_character.experience, new_character.gold
 
 
+
+def boss_fight():
+    print("Still in progress KEKW scammed")
+    continue_adventure()
 
 
 

@@ -17,10 +17,11 @@ class Weapon:
         self.damage = damage
 
 class Armour:
-    def __init__(self, name, price, defence):
+    def __init__(self, name, price, defence, hpboost):
         self.name = name
         self.price = price
         self.defence = defence
+        self.hpboost = hpboost
 
 class Monster:
   def __init__(self, name,  health, armor, damage, level):
@@ -31,3 +32,10 @@ class Monster:
     self.level = level
 
 
+class Boss:
+  def __init__(self, name,  health, armor, damage, level):
+    self.name = name
+    self.health = health
+    self.armor = armor
+    self.damage = damage
+    self.level = level
